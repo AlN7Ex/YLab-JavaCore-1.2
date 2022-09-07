@@ -18,16 +18,24 @@ import java.util.stream.Collectors;
 public class Main {
     public static void main(String[] args) {
 
-        // Продублировал всё в тестах
-        System.out.println(fuzzySearch("car", "ca6$$#_rtwheel"));
-        System.out.println(fuzzySearch("cwhl", "cartwheel"));
-        System.out.println(fuzzySearch("cwhee", "cartwheel"));
-        System.out.println(fuzzySearch("cartwheel", "cartwheel"));
-        System.out.println(fuzzySearch("cwheeel", "cartwheel"));
-        System.out.println(fuzzySearch("lw", "cartwheel"));
+        // Продублировал всё в тестах.
+        System.out.println(fuzzySearchStream("car", "ca6$$#_rtwheel"));
+        System.out.println(fuzzySearchStream("cwhl", "cartwheel"));
+        System.out.println(fuzzySearchStream("cwhee", "cartwheel"));
+        System.out.println(fuzzySearchStream("cartwheel", "cartwheel"));
+        System.out.println(fuzzySearchStream("cwheeel", "cartwheel"));
+        System.out.println(fuzzySearchStream("lw", "cartwheel"));
+
+        System.out.println(fuzzySearchLoop("car", "ca6$$#_rtwheel"));
+        System.out.println(fuzzySearchLoop("cwhl", "cartwheel"));
+        System.out.println(fuzzySearchLoop("cwhee", "cartwheel"));
+        System.out.println(fuzzySearchLoop("cartwheel", "cartwheel"));
+        System.out.println(fuzzySearchLoop("cwheeel", "cartwheel"));
+        System.out.println(fuzzySearchLoop("lw", "cartwheel"));
     }
 
-    public static boolean fuzzySearch(String source, String comparing) {
+    // Stream and collection
+    public static boolean fuzzySearchStream(String source, String comparing) {
         List<Character> sourceList = source.chars()
                 .mapToObj(c -> (char) c)
                 .collect(Collectors.toList());
@@ -43,5 +51,16 @@ public class Main {
                 .collect(Collectors.joining());
 
         return retainedStr.equals(source);
+    }
+
+    // Simple loop
+    public static boolean fuzzySearchLoop(String source, String comparing) {
+        int i = 0;
+        for (int j = 0; j < comparing.length(); ++j) {
+            if (i != source.length() && source.charAt(i) == comparing.charAt(j)) {
+                ++i;
+            }
+        }
+        return i == source.length();
     }
 }
