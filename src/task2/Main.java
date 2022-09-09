@@ -15,11 +15,12 @@ public class Main {
     public static void main(String[] args) {
         int[] result = sum(new int[]{3, 4, 2, 7}, 10);
         System.out.println(Arrays.toString(result));
-
-
     }
 
     public static int[] sum(int[] nums, int target) {
+        if (nums == null) {
+            return null;
+        }
         Map<Integer, Integer> result = new HashMap<>();
         for (int i = 0; i < nums.length; ++i) {
             int expectedNum = target - nums[i];
