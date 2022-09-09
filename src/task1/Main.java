@@ -11,11 +11,29 @@
  * Value:   3
  * Key:     Jack
  * Value:   1
+ *
+ * <p>
+ *
+ * Amelia:
+ * 1 - Amelia (5)
+ * 2 - Amelia (6)
+ * 3 - Amelia (7)
+ * 4 - Amelia (8)
+ * Emily:
+ * 1 - Emily (3)
+ * Harry:
+ * 1 - Harry (0)
+ * 2 - Harry (1)
+ * 3 - Harry (2)
+ * Jack:
+ * 1 - Jack (4)
  */
 
 package task1;
 
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 
@@ -83,6 +101,10 @@ public class Main {
         System.out.println();
 
         for (Person person : RAW_DATA) {
+            if (person == null || person.getName() == null) {
+                System.out.println("null");
+                continue;
+            }
             System.out.println(person.id + " - " + person.name);
         }
 
@@ -92,6 +114,7 @@ public class Main {
         System.out.println("Duplicate filtered, grouped by name, sorted by name and id:");
         System.out.println();
 
+
         BiConsumer<String, Long> KeyValueConsumer =
                 (key, value) -> System.out.println("Key:\t" + key + "\nValue:\t" + value);
 
@@ -99,5 +122,22 @@ public class Main {
                 .distinct()
                 .collect(groupingBy(Person::getName, counting()))
                 .forEach(KeyValueConsumer);
+
+        // Добавил пропущенную реализацию в задании 1
+        BiConsumer<String, List<Person>> personSortedByIdAndName = (key, people) -> {
+            System.out.println(key);
+            for (int i = 0; i < people.size(); ++i) {
+                System.out.println((i + 1) + " - " + people.get(i).getName()
+                        + "(" + people.get(i).getId() + ")");
+            }
+        };
+
+        Arrays.stream(RAW_DATA)
+                .distinct()
+                .filter(Objects::nonNull)
+                .filter(person -> Objects.nonNull(person.getName()))
+                .sorted(Comparator.comparingInt(Person::getId))
+                .collect(groupingBy(Person::getName))
+                .forEach(personSortedByIdAndName);
     }
 }
