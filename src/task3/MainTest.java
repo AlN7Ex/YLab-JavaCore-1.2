@@ -14,6 +14,9 @@ public class MainTest {
         Assert.assertTrue(Main.fuzzySearchStream("cartwheel", "cartwheel"));
         Assert.assertFalse(Main.fuzzySearchStream("cwheeel", "cartwheel"));
         Assert.assertFalse(Main.fuzzySearchStream("lw", "cartwheel"));
+        Assert.assertNull(Main.fuzzySearchStream(null,"ca6$$#_rtwheel"));
+        Assert.assertNull(Main.fuzzySearchStream("cwhl",""));
+
     }
 
     @Test
@@ -24,5 +27,7 @@ public class MainTest {
         Assert.assertTrue(Main.fuzzySearchLoop("cartwheel", "cartwheel"));
         Assert.assertFalse(Main.fuzzySearchLoop("cwheeel", "cartwheel"));
         Assert.assertFalse(Main.fuzzySearchLoop("lw", "cartwheel"));
+        Assert.assertNull(Main.fuzzySearchStream("car",""));
+        Assert.assertNull(Main.fuzzySearchStream("cwheeel",null));
     }
 }

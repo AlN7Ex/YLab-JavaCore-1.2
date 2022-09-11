@@ -19,7 +19,7 @@ public class Main {
     public static void main(String[] args) {
 
         // Продублировал всё в тестах.
-        System.out.println(fuzzySearchStream("car", "ca6$$#_rtwheel"));
+        System.out.println(fuzzySearchStream("", "ca6$$#_rtwheel"));
         System.out.println(fuzzySearchStream("cwhl", "cartwheel"));
         System.out.println(fuzzySearchStream("cwhee", "cartwheel"));
         System.out.println(fuzzySearchStream("cartwheel", "cartwheel"));
@@ -35,7 +35,10 @@ public class Main {
     }
 
     // Stream and collection
-    public static boolean fuzzySearchStream(String source, String comparing) {
+    public static Boolean fuzzySearchStream(String source, String comparing) {
+        if (source == null || source.isEmpty() || comparing == null || comparing.isEmpty()) {
+            return null;
+        }
         List<Character> sourceList = source.chars()
                 .mapToObj(c -> (char) c)
                 .collect(Collectors.toList());
@@ -54,7 +57,10 @@ public class Main {
     }
 
     // Simple loop
-    public static boolean fuzzySearchLoop(String source, String comparing) {
+    public static Boolean fuzzySearchLoop(String source, String comparing) {
+        if (source == null || comparing == null) {
+            return null;
+        }
         int i = 0;
         for (int j = 0; j < comparing.length(); ++j) {
             if (i != source.length() && source.charAt(i) == comparing.charAt(j)) {
